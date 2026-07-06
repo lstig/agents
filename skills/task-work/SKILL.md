@@ -5,6 +5,8 @@ argument-hint: "note id, note title, or a description of new work"
 disable-model-invocation: true
 ---
 
+Requires an MCP server named `joplin` exposing Joplin's note/notebook/tag tools, backed by Joplin's Web Clipper API with a `JOPLIN_MCP_TOKEN` env var set to its API token. This plugin bundles a reference config for it.
+
 Work a task while keeping its Joplin task note the single source of truth.
 The `task-notes` skill owns the note format (its TASK-FORMAT.md) and the update mechanics — load it first and follow its conventions for every note change.
 

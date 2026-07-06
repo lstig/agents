@@ -1,0 +1,11 @@
+{
+  "name": "lstig-agents",
+  "version": "0.1.0",
+  "description": "Portable customizations for AI coding agents: Agent Skills for Claude Code, Pi, Codex, Gemini CLI, and Copilot.",
+  "author": {
+    "name": "Luke Stigdon"
+  },
+  "license": "MIT",
+  "repository": "https://github.com/lstig/agents",
+  "mcpServers": "./.mcp.json"
+}

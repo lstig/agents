@@ -3,6 +3,8 @@ name: task-notes
 description: Create and update Joplin task notes — the durable record of one task (description, working directory, checklist, log, links). Use when the user wants a Joplin note tracking a task, or when another skill needs the task-note format or update conventions.
 ---
 
+Requires an MCP server named `joplin` exposing Joplin's note/notebook/tag tools, backed by Joplin's Web Clipper API with a `JOPLIN_MCP_TOKEN` env var set to its API token. This plugin bundles a reference config for it.
+
 A task note is a Joplin to-do holding the true state of one task.
 Anyone — or any fresh agent — reading only the note must be able to resume the work.
 The title, body structure, and entry formats are defined in [TASK-FORMAT.md](./TASK-FORMAT.md).
