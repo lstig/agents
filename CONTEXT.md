@@ -9,7 +9,7 @@ A self-contained directory under `skills/` holding a `SKILL.md` (agent-facing in
 _Avoid_: plugin, command, prompt
 
 **Plugin**:
-A named, installable unit defined in the marketplace that bundles a selection of skills and any config they need (e.g. MCP servers). The repo ships two: `development-skills` and `workflow-skills`.
+A named, installable unit defined in the marketplace that bundles a selection of skills and any config they need (e.g. MCP servers). The repo ships two: `development` and `workflow`.
 _Avoid_: skill, package
 
 **Marketplace**:

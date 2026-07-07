@@ -1,0 +1,15 @@
+{
+  "$schema": "https://skills.sh/schemas/skills.sh.schema.json",
+  "groupings": [
+    {
+      "title": "development",
+      "description": "General development skills: open PRs/MRs on any forge, ship finished worktrees.",
+      "skills": ["pr", "shipit"]
+    },
+    {
+      "title": "workflow",
+      "description": "Joplin-backed task workflow: durable task notes plus a skill that drives work from them.",
+      "skills": ["task-notes", "task-work"]
+    }
+  ]
+}

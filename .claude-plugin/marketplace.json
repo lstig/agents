@@ -6,7 +6,7 @@
   "description": "Portable customizations for AI coding agents.",
   "plugins": [
     {
-      "name": "development-skills",
+      "name": "development",
       "source": "./",
       "description": "General development skills: open PRs/MRs on any forge, ship finished worktrees.",
       "version": "0.1.0",
@@ -19,7 +19,7 @@
       ]
     },
     {
-      "name": "workflow-skills",
+      "name": "workflow",
       "source": "./",
       "description": "Joplin-backed task workflow: durable task notes plus a skill that drives work from them.",
       "version": "0.1.0",

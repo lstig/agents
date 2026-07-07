@@ -1,5 +1,7 @@
 # agents
 
+[![skills.sh](https://skills.sh/b/lstig/agents)](https://skills.sh/lstig/agents)
+
 Portable customizations for AI coding agents.
 Today that's a set of [Agent Skills](https://agentskills.io/specification) under [`skills/`](./skills); subagents, prompts, and themes may follow.
 
@@ -38,13 +40,13 @@ If you install `task-notes` or `task-work` this way, wire up the `joplin` MCP se
 
 The repo is a Claude Code plugin marketplace ([`.claude-plugin/marketplace.json`](./.claude-plugin/marketplace.json)) named `lstig-agents`, offering two plugins:
 
-- **`development-skills`** — the general development skills: `pr`, `shipit`.
-- **`workflow-skills`** — the task workflow: `task-notes`, `task-work`, plus the `joplin` MCP server config so the Joplin dependency travels with them.
+- **`development`** — the general development skills: `pr`, `shipit`.
+- **`workflow`** — the task workflow: `task-notes`, `task-work`, plus the `joplin` MCP server config so the Joplin dependency travels with them.
 
 ```
 /plugin marketplace add lstig/agents
-/plugin install development-skills@lstig-agents
-/plugin install workflow-skills@lstig-agents
+/plugin install development@lstig-agents
+/plugin install workflow@lstig-agents
 ```
 
 ### Vendored
