@@ -1,1 +1,4 @@
 .DS_Store
+# local-only: a tracked root .mcp.json is auto-discovered by every plugin
+# sourced at "./"; the canonical copy lives in .claude-plugin/mcp.json
+/.mcp.json

@@ -30,7 +30,7 @@
         "./skills/experimental/task-notes",
         "./skills/experimental/task-work"
       ],
-      "mcpServers": "./.mcp.json"
+      "mcpServers": "./.claude-plugin/mcp.json"
     }
   ]
 }

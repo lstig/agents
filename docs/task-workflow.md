@@ -22,7 +22,7 @@ The skills need an MCP server named `joplin` backed by Joplin's Web Clipper API.
    /plugin install workflow-skills@lstig-agents
    ```
 
-   If you install the skills another way (skills.sh, vendored), wire up the `joplin` server from [.mcp.json](../.mcp.json) yourself.
+   If you install the skills another way (skills.sh, vendored), wire up the `joplin` server from [.claude-plugin/mcp.json](../.claude-plugin/mcp.json) yourself.
 
 The skills keep their notes in a Joplin notebook named `Agents`, creating it on first use.
 
