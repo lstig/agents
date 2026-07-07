@@ -1,7 +1,7 @@
 ---
 name: task-notes
 description: Create and update Joplin task notes — the durable record of one task (description, working directory, checklist, log, links). Use when the user wants a Joplin note tracking a task, or when another skill needs the task-note format or update conventions.
-allowed-tools: mcp__joplin__search_notes mcp__joplin__list_notebooks mcp__joplin__create_notebook mcp__joplin__create_note mcp__joplin__update_note
+allowed-tools: mcp__joplin__semantic_search_notes mcp__joplin__search_notes mcp__joplin__list_notebooks mcp__joplin__create_notebook mcp__joplin__create_note mcp__joplin__update_note
 ---
 
 A task note is a Joplin to-do holding the true state of one task.
@@ -10,9 +10,10 @@ The title, body structure, and entry formats are defined in [TASK-FORMAT.md](./T
 
 ## Creating a task note
 
-1. Search for an existing open note for the same work: `search_notes` with `notebook:Agents type:todo iscompleted:0 <keywords>`.
+1. Get the `Agents` notebook id from `list_notebooks`; create it with `create_notebook` if missing.
+2. Search for an existing open note for the same work: `semantic_search_notes` scoped to the `Agents` `notebook_id` with a query describing the task, then confirm any promising match is still open with `read_note` or `search_notes` (`notebook:Agents type:todo iscompleted:0 <keywords>`).
+   If semantic search errors (embeddings not enabled in Joplin's AI settings) or turns up nothing relevant, fall back to plain `search_notes` with `notebook:Agents type:todo iscompleted:0 <keywords>`.
    If one exists, update it per the conventions below instead of creating a duplicate.
-2. Get the `Agents` notebook id from `list_notebooks`; create it with `create_notebook` if missing.
 3. Allocate the task number.
    Search `notebook:Agents` with **no** `iscompleted` filter (completed tasks keep their numbers so none is ever reused), read every title's leading `[NNNN]`, take the highest, and add one.
    Start at `[0001]` when the notebook has no numbered notes yet.

@@ -2,14 +2,16 @@
 name: task-work
 description: Drive work from a Joplin task note, one checklist item at a time.
 argument-hint: "note id, note title, or a description of new work"
-allowed-tools: mcp__joplin__search_notes mcp__joplin__read_note mcp__joplin__update_note mcp__joplin__create_note mcp__joplin__list_notebooks
+allowed-tools: mcp__joplin__semantic_search_notes mcp__joplin__search_notes mcp__joplin__read_note mcp__joplin__update_note mcp__joplin__create_note mcp__joplin__list_notebooks
 ---
 
 Work a task while keeping its Joplin task note the single source of truth.
 The `task-notes` skill owns the note format (its TASK-FORMAT.md) and the update mechanics — load it first and follow its conventions for every note change.
 
 1. **Resolve the note.**
-   A bare number (`42`) or `[NNNN]` handle resolves by searching titles for the zero-padded `[NNNN]` prefix; otherwise treat the arguments as keywords or a note id and find it (`search_notes` with `notebook:Agents type:todo iscompleted:0 <keywords>`).
+   A bare number (`42`) or `[NNNN]` handle resolves by searching titles for the zero-padded `[NNNN]` prefix (`search_notes`, `notebook:Agents title:"[NNNN]"`).
+   Otherwise treat the arguments as a description of the work and find it with `semantic_search_notes` scoped to the `Agents` notebook's id (get it from `list_notebooks`), then confirm the match is still an open todo with `read_note` or `search_notes` (`notebook:Agents type:todo iscompleted:0 <keywords>`).
+   If semantic search errors (embeddings not enabled) or turns up nothing relevant, fall back to plain `search_notes` with `notebook:Agents type:todo iscompleted:0 <keywords>`.
    `read_note` the match.
    If nothing matches, create a note for the described work per `task-notes`.
    Done when you hold the note id and its full body.
