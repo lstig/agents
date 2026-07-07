@@ -1,12 +1,8 @@
 {
   "mcpServers": {
     "joplin": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "mcp-remote",
-        "http://127.0.0.1:41184/mcp?token=${JOPLIN_MCP_TOKEN}"
-      ]
+      "type": "http",
+      "url": "http://127.0.0.1:41184/mcp?token=${JOPLIN_MCP_TOKEN}"
     }
   }
 }

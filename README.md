@@ -34,7 +34,8 @@ npx skills add lstig/agents
 Add `-g` to install globally instead of per-project, `--skill <name>` to pick individual skills, or `--list` to see what's available.
 Works across Claude Code, Cursor, Codex, Copilot, Gemini CLI, and Cline.
 
-If you install `task-notes` or `task-work` this way, wire up the `joplin` MCP server from [`.claude-plugin/mcp.json`](./.claude-plugin/mcp.json) yourself — skills.sh installs skills only.
+If you install `task-notes` or `task-work` this way, wire up the `joplin` MCP server yourself — skills.sh installs skills only.
+It's a native HTTP server; see [.claude-plugin/mcp.json](./.claude-plugin/mcp.json) or run `claude mcp add --transport http joplin "http://127.0.0.1:41184/mcp?token=$JOPLIN_MCP_TOKEN"`.
 
 ### Claude Code plugins
 
@@ -60,7 +61,7 @@ cp -R agents/skills/experimental/pr ~/.claude/skills/pr
 ```
 
 Pi and Codex read the same `SKILL.md` layout; see your agent's docs for its skills location.
-As with skills.sh, vendoring `task-notes` or `task-work` means bringing [`.claude-plugin/mcp.json`](./.claude-plugin/mcp.json) (or equivalent MCP config) along.
+As with skills.sh, vendoring `task-notes` or `task-work` means bringing [`.claude-plugin/mcp.json`](./.claude-plugin/mcp.json) (or an equivalent HTTP MCP config) along.
 
 ## License
 

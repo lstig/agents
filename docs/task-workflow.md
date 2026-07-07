@@ -14,7 +14,7 @@ Any fresh agent — or you, weeks later — can resume a task by reading only it
 
 ## Setup
 
-The skills need an MCP server named `joplin` backed by Joplin's Web Clipper API.
+The skills need an MCP server named `joplin`, a native HTTP server backed by Joplin's Web Clipper API (no stdio bridge required).
 
 1. Install [Joplin](https://joplinapp.org/) and enable the Web Clipper service (**Tools → Options → Web Clipper**).
    Copy the authorization token from that screen.
@@ -26,7 +26,13 @@ The skills need an MCP server named `joplin` backed by Joplin's Web Clipper API.
    /plugin install workflow@lstig-agents
    ```
 
-   If you install the skills another way (skills.sh, vendored), wire up the `joplin` server from [.claude-plugin/mcp.json](../.claude-plugin/mcp.json) yourself.
+   If you install the skills another way (skills.sh, vendored), wire up the `joplin` server from [.claude-plugin/mcp.json](../.claude-plugin/mcp.json) yourself, or add it directly:
+
+   ```
+   claude mcp add --transport http joplin "http://127.0.0.1:41184/mcp?token=${JOPLIN_MCP_TOKEN}"
+   ```
+
+   Add `--scope user` to make it available across all your projects, or `--scope project` to check it into a repo's own `.mcp.json`.
 
 The skills keep their notes in a Joplin notebook named `Agents`, creating it on first use.
 
