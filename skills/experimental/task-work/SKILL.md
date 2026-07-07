@@ -35,7 +35,9 @@ The `task-notes` skill owns the note format (its TASK-FORMAT.md) and the update 
    Resume once the user has responded or the blocker has cleared on its own; set status back to `working` and unblock the note before touching the next item.
    If you must stop before every item is complete (session ending, hard blocker you cannot poll through), set status back to `available` so the next worker can pick up cleanly.
    When you think the work is finished, re-read the note and review the whole checklist: confirm every item is genuinely complete, checked off, and has a matching log entry — an update lost to a tool failure looks identical to one you never made.
+   While you have the note open, glance at the log: every entry must sit on its own line; repair any that run together (a literal `\n` or a missing line break) with a `replace_text` before closing.
    Done when that review finds no unchecked items and no gaps.
 
 4. **Close out.**
-   Add links for any artifacts produced (PRs, commits, docs), close the task per `task-notes`'s conventions, and tell the user what changed and what to do next.
+   Close the note *before* releasing it: set `todo_completed: true` first (per `task-notes`'s conventions), which drops it out of open-task searches immediately — never set status back to `available` on a finished task, or another worker can claim it in the window before it closes.
+   Then add links for any artifacts produced (PRs, commits, docs) and tell the user what changed and what to do next.
