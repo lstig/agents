@@ -28,7 +28,7 @@ Opens a pull/merge request using the forge's native CLI, never a raw API call. E
    | `github.com`, or host contains `github` | GitHub | `gh` | `gh pr create` |
    | `gitlab.com`, or host contains `gitlab` | GitLab | `glab` | `glab mr create` |
    | `codeberg.org`, or host contains `forgejo` | Forgejo | `fj` | `fj pr create` |
-   | Host contains `gitea` | Gitea | `tea` | `tea pr create` (alias `tea pulls create`) |
+   | `gitea.com`, or host contains `gitea` | Gitea | `tea` | `tea pr create` (alias `tea pulls create`) |
 
    If the host matches none of these, ask the user which forge it is rather than guessing.
    Done when: exactly one CLI is selected.
