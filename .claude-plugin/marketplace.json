@@ -1,0 +1,36 @@
+{
+  "name": "lstig-agents",
+  "owner": {
+    "name": "Luke Stigdon"
+  },
+  "description": "Portable customizations for AI coding agents.",
+  "plugins": [
+    {
+      "name": "development-skills",
+      "source": "./",
+      "description": "General development skills: open PRs/MRs on any forge, ship finished worktrees.",
+      "version": "0.1.0",
+      "license": "MIT",
+      "repository": "https://github.com/lstig/agents",
+      "strict": false,
+      "skills": [
+        "./skills/experimental/pr",
+        "./skills/experimental/shipit"
+      ]
+    },
+    {
+      "name": "workflow-skills",
+      "source": "./",
+      "description": "Joplin-backed task workflow: durable task notes plus a skill that drives work from them.",
+      "version": "0.1.0",
+      "license": "MIT",
+      "repository": "https://github.com/lstig/agents",
+      "strict": false,
+      "skills": [
+        "./skills/experimental/task-notes",
+        "./skills/experimental/task-work"
+      ],
+      "mcpServers": "./.mcp.json"
+    }
+  ]
+}
