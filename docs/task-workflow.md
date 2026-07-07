@@ -1,5 +1,9 @@
 # The task workflow
 
+> [!NOTE]
+> The Joplin MCP integration below was tested against a prerelease build of Joplin with MCP support, [v3.7.6](https://github.com/laurent22/joplin/releases/tag/v3.7.6), as of this writing.
+> See Joplin's own [MCP setup docs](https://joplinapp.org/help/apps/ai_mcp) for the full picture.
+
 A pair of skills that turn a Joplin note into the single source of truth for one task.
 
 - [`task-notes`](../skills/experimental/task-notes) owns the note: its format ([TASK-FORMAT.md](../skills/experimental/task-notes/TASK-FORMAT.md)) and the conventions for every update.
