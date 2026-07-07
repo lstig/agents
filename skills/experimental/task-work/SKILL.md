@@ -6,7 +6,8 @@ allowed-tools: mcp__joplin__semantic_search_notes mcp__joplin__search_notes mcp_
 ---
 
 Work a task while keeping its Joplin task note the single source of truth.
-The `task-notes` skill owns the note format (its TASK-FORMAT.md) and the update mechanics — load it first and follow its conventions for every note change.
+The `/task-notes` skill owns the note format (its TASK-FORMAT.md) and the update mechanics; every note change below follows its conventions.
+If it is not already in context, load it now — before step 1, and never update a note without it.
 
 1. **Resolve the note.**
    A bare number (`42`) or `[NNNN]` handle resolves by searching titles for the zero-padded `[NNNN]` prefix (`search_notes`, `notebook:Agents title:"[NNNN]"`).
@@ -18,11 +19,12 @@ The `task-notes` skill owns the note format (its TASK-FORMAT.md) and the update 
 
 2. **Orient.**
    Switch to the note's working directory, check out its working branch if one is recorded, and read the whole log — it is a record of what already happened, not a suggestion.
+   If any log entries run together on one line (a literal `\n` or a missing line break), repair them with `replace_text` before continuing — a corrupted tail glues the next append onto it.
    Check the frontmatter `status` before proceeding:
    - `working`: another agent may already be active — warn the user and ask permission before continuing.
    - `blocked`: a previous worker was waiting on input — surface the blocked section to the user, wait for their response, then unblock the note per `task-notes`'s conventions (restore the title, log the response, remove the blocked section) before continuing.
    - `available`: proceed normally.
-   Set status to `working` and log a pickup entry: `- <ts> — Picked up task; starting <item>`.
+   Set status to `working` and log a pickup entry (`Picked up task; starting <item>`) in `task-notes`'s log-entry format — timestamp, separator, and line break included.
    Done when you can state which unchecked item is next and why.
 
 3. **Work the loop.**
@@ -30,12 +32,12 @@ The `task-notes` skill owns the note format (its TASK-FORMAT.md) and the update 
    When an item is done, check it off and log the outcome before taking the next one.
    Check a parent item only after every one of its sub-items is checked.
    If the work surfaces new tasks, add them to the checklist instead of doing them silently.
-   If you get blocked (user input needed, outage, missing access), set status to `blocked`, block the note per `task-notes`'s conventions, then wait: periodically re-read *the note* for a status or response change. Never retry the blocking action itself in a loop — that routes around the user instead of waiting for them.
+   If you get blocked (user input needed, outage, missing access), set status to `blocked`, block the note per `/task-notes`'s conventions, then wait: periodically re-read *the note* for a status or response change. Never retry the blocking action itself in a loop — that routes around the user instead of waiting for them.
    A changed `updated_time` while you were idle means the user edited the note — read the response under `**Response:**` (a ticked option, or text on the freeform line).
    Resume once the user has responded or the blocker has cleared on its own; set status back to `working` and unblock the note before touching the next item.
    If you must stop before every item is complete (session ending, hard blocker you cannot poll through), set status back to `available` so the next worker can pick up cleanly.
    When you think the work is finished, re-read the note and review the whole checklist: confirm every item is genuinely complete, checked off, and has a matching log entry — an update lost to a tool failure looks identical to one you never made.
-   While you have the note open, glance at the log: every entry must sit on its own line; repair any that run together (a literal `\n` or a missing line break) with a `replace_text` before closing.
+   While you have the note open, glance at the log and repair any run-together entries as in step 2 — last chance before the note closes.
    Done when that review finds no unchecked items and no gaps.
 
 4. **Close out.**

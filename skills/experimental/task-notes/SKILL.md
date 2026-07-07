@@ -25,7 +25,8 @@ Done when the note exists in `Agents` **as a to-do** (it appears under `type:tod
 
 All updates go through `update_note` partial ops; never rewrite the full body.
 
-- **Log an event:** `append` one entry in the log-entry format, ending with a real trailing newline — an actual line break, never the literal characters backslash-`n`, which run the entries together (see [TASK-FORMAT.md](./TASK-FORMAT.md)).
+- **Log an event:** `append` one entry in the log-entry format (see [TASK-FORMAT.md](./TASK-FORMAT.md)) — timestamp from `date '+%Y-%m-%d %H:%M'` — ending with a real line break.
+  Appends are verbatim — the server inserts nothing between them, so that line break is the only thing separating this entry from the next, and the two characters backslash-`n` are text, not a line break.
 - **Record durable knowledge:** `append` a log entry tagged `Decision:`, `Finding:`, or `Dead end:` per [TASK-FORMAT.md](./TASK-FORMAT.md).
   If a finding changes the shape of the work, also add a checklist item or amend `## Task` — the note's current truth lives there, not in the log.
 - **Update status:** `replace_text` with `status: <current>` → `status: <new>` (in the frontmatter block), using the valid status values.
