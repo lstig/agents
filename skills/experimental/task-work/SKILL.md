@@ -30,7 +30,7 @@ The `task-notes` skill owns the note format (its TASK-FORMAT.md) and the update 
    When an item is done, check it off and log the outcome before taking the next one.
    Check a parent item only after every one of its sub-items is checked.
    If the work surfaces new tasks, add them to the checklist instead of doing them silently.
-   If you get blocked (user input needed, outage, missing access), set status to `blocked`, block the note per `task-notes`'s conventions, then poll: periodically re-read the note and re-check the blocker.
+   If you get blocked (user input needed, outage, missing access), set status to `blocked`, block the note per `task-notes`'s conventions, then wait: periodically re-read *the note* for a status or response change. Never retry the blocking action itself in a loop — that routes around the user instead of waiting for them.
    A changed `updated_time` while you were idle means the user edited the note — read the response under `**Response:**` (a ticked option, or text on the freeform line).
    Resume once the user has responded or the blocker has cleared on its own; set status back to `working` and unblock the note before touching the next item.
    If you must stop before every item is complete (session ending, hard blocker you cannot poll through), set status back to `available` so the next worker can pick up cleanly.
