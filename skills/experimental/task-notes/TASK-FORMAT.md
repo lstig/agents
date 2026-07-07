@@ -94,7 +94,8 @@ When present, it sits between `## Checklist` and `## Links`:
 ```
 
 - One entry per event; get the timestamp from `date '+%Y-%m-%d %H:%M'`.
-- Every entry ends with a real trailing newline so the next `append` starts a new line.
+- End every entry with a real trailing newline — an actual line break in the `append` text — so the next `append` starts a new line.
+- Never put the literal two characters backslash-`n` in the entry: a literal `\n` is not a line break, it prints inline and runs the entries together (`…done.\n- 2026-… next`).
 - Entries recording durable knowledge start the message with a tag so they stand out when skimming: `Decision:` (a choice made and why), `Finding:` (a fact discovered about the system or its constraints), or `Dead end:` (an approach tried and abandoned, so no one retries it).
 
 ```md
