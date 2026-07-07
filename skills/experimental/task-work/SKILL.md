@@ -2,7 +2,7 @@
 name: task-work
 description: Drive work from a Joplin task note, one checklist item at a time.
 argument-hint: "note id, note title, or a description of new work"
-disable-model-invocation: true
+allowed-tools: mcp__joplin__search_notes mcp__joplin__read_note mcp__joplin__update_note mcp__joplin__create_note mcp__joplin__list_notebooks
 ---
 
 Work a task while keeping its Joplin task note the single source of truth.

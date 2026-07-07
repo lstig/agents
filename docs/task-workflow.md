@@ -86,7 +86,7 @@ You can also create notes for future work you don't intend to start yet — the 
 
 ### 2. Work the task
 
-`task-work` is invoked explicitly (it never fires on its own).
+`task-work` can be invoked explicitly (`/task-work 17`) or automatically by an agent that recognizes there's a tracked task to pick up.
 Hand it a task number, a title fragment, or a description:
 
 ```

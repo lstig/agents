@@ -1,6 +1,7 @@
 ---
 name: task-notes
 description: Create and update Joplin task notes — the durable record of one task (description, working directory, checklist, log, links). Use when the user wants a Joplin note tracking a task, or when another skill needs the task-note format or update conventions.
+allowed-tools: mcp__joplin__search_notes mcp__joplin__list_notebooks mcp__joplin__create_notebook mcp__joplin__create_note mcp__joplin__update_note
 ---
 
 A task note is a Joplin to-do holding the true state of one task.
