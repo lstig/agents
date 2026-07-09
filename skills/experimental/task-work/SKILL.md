@@ -19,6 +19,7 @@ If it is not already in context, load it now — before step 1, and never update
 
 2. **Orient.**
    Switch to the note's working directory, check out its working branch if one is recorded, and read the whole log — it is a record of what already happened, not a suggestion.
+   If the work will happen on a different branch than the one recorded — for example, moving into a git worktree — update `working-branch` in the frontmatter to match as soon as the branch changes, per `task-notes`'s conventions; do the same later if the branch changes again mid-task.
    If any log entries run together on one line (a literal `\n` or a missing line break), repair them with `replace_text` before continuing — a corrupted tail glues the next append onto it.
    Check the frontmatter `status` before proceeding:
    - `working`: another agent may already be active — warn the user and ask permission before continuing.

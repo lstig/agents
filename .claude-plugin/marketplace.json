@@ -22,7 +22,7 @@
       "name": "workflow",
       "source": "./",
       "description": "Joplin-backed task workflow: durable task notes plus a skill that drives work from them.",
-      "version": "0.3.0",
+      "version": "0.3.1",
       "license": "MIT",
       "repository": "https://github.com/lstig/agents",
       "strict": false,

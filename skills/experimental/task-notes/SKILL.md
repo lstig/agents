@@ -30,6 +30,7 @@ All updates go through `update_note` partial ops; never rewrite the full body.
 - **Record durable knowledge:** `append` a log entry tagged `Decision:`, `Finding:`, or `Dead end:` per [TASK-FORMAT.md](./TASK-FORMAT.md).
   If a finding changes the shape of the work, also add a checklist item or amend `## Task` — the note's current truth lives there, not in the log.
 - **Update status:** `replace_text` with `status: <current>` → `status: <new>` (in the frontmatter block), using the valid status values.
+- **Update the working branch:** if work moves to a different branch than the one recorded — e.g. the task moves into a git worktree — `replace_text` with `working-branch: <old>` → `working-branch: <new>` (in the frontmatter block) as soon as the branch changes, so a resuming worker checks out the right one.
 - **Check off an item:** `replace_text` with find `- [ ] <exact item>`, replace `- [x] <exact item>`.
   If the item has sub-items, check each sub-item off first; only check the parent after all its sub-items are checked.
 - **Add a line to a section:** `replace_text` on the *next* section's heading, replacing it with the new line, a blank line, then the heading — headings are the only guaranteed-unique anchors.
