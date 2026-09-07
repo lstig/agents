@@ -26,3 +26,23 @@ _Avoid_: readme, manual
 **Task note**:
 A Joplin to-do that is the durable, single source of truth for one task. Owned by the `task-notes` skill; consumed by `task-work`.
 _Avoid_: ticket, issue, todo
+
+**Artifact chain**:
+The three linked markdown files describing one change — intent, then spec, then plan — sharing a number and slug under `docs/sdlc/`. Owned by the `intent`, `spec`, and `plan` skills.
+_Avoid_: pipeline, workflow, SDLC docs
+
+**Intent**:
+The first artifact in the chain: the problem worth solving, with no mechanism in it. Cheap by design, so rejecting one costs nothing.
+_Avoid_: proposal, RFC, ticket
+
+**Spec**:
+The second artifact: what the solution must do, with no file paths or code. Written only once its intent is `accepted`.
+_Avoid_: design doc, requirements doc, PRD
+
+**Plan**:
+The third artifact: how the change gets built, written read-only against the real codebase. Written only once its spec is `approved`, and the baseline a reviewer later checks the diff against.
+_Avoid_: strategy, approach doc
+
+**Gate**:
+A `status` value in an artifact's frontmatter that only a human moves forward. An agent writes artifacts and reports them; it never accepts, approves, or rejects its own work.
+_Avoid_: state, phase, approval step

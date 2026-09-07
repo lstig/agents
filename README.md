@@ -19,9 +19,15 @@ A skill graduates to `skills/` once it has proven itself through real use.
 | [`shipit`](./skills/experimental/shipit) | Commit changes, merge the branch into its base, and remove the worktree. |
 | [`task-notes`](./skills/experimental/task-notes) | Create and update Joplin task notes — the durable record of one task (description, checklist, log, links). |
 | [`task-work`](./skills/experimental/task-work) | Drive work from a Joplin task note, one checklist item at a time. Pairs with `task-notes`. |
+| [`intent`](./skills/experimental/intent) | Capture an idea as a version-controlled intent — the first artifact in the intent -> spec -> plan chain. |
+| [`spec`](./skills/experimental/spec) | Turn an accepted intent into a spec: what the solution must do, checked against organizational policy. |
+| [`plan`](./skills/experimental/plan) | Turn an approved spec into a read-only implementation plan — the audit trail and review baseline. |
 
 `task-notes` and `task-work` form the task workflow — a Joplin note as the single source of truth for each task.
 See [docs/task-workflow.md](./docs/task-workflow.md) for setup and a worked example.
+
+`intent`, `spec`, and `plan` form the SDLC artifact chain — one numbered chain of reviewed markdown per change, with the stage gates enforced by a hook rather than by asking the model.
+See [docs/sdlc.md](./docs/sdlc.md) for a worked example.
 
 ## Installing
 
@@ -39,15 +45,17 @@ It's a native HTTP server; see [.claude-plugin/mcp.json](./.claude-plugin/mcp.js
 
 ### Claude Code plugins
 
-The repo is a Claude Code plugin marketplace ([`.claude-plugin/marketplace.json`](./.claude-plugin/marketplace.json)) named `lstig-agents`, offering two plugins:
+The repo is a Claude Code plugin marketplace ([`.claude-plugin/marketplace.json`](./.claude-plugin/marketplace.json)) named `lstig-agents`, offering three plugins:
 
 - **`development`** — the general development skills: `pr`, `shipit`.
 - **`workflow`** — the task workflow: `task-notes`, `task-work`, plus the `joplin` MCP server config so the Joplin dependency travels with them.
+- **`sdlc`** — the artifact chain: `intent`, `spec`, `plan`, plus the `PreToolUse` hook that enforces their gates.
 
 ```
 /plugin marketplace add lstig/agents
 /plugin install development@lstig-agents
 /plugin install workflow@lstig-agents
+/plugin install sdlc@lstig-agents
 ```
 
 ### Vendored
@@ -62,6 +70,7 @@ cp -R agents/skills/experimental/pr ~/.claude/skills/pr
 
 Pi and Codex read the same `SKILL.md` layout; see your agent's docs for its skills location.
 As with skills.sh, vendoring `task-notes` or `task-work` means bringing [`.claude-plugin/mcp.json`](./.claude-plugin/mcp.json) (or an equivalent HTTP MCP config) along.
+Vendoring `intent`, `spec`, or `plan` gets the skills but not the gate hook; bring [`.claude-plugin/hooks/`](./.claude-plugin/hooks) too, or the gates become instructions rather than enforcement.
 
 ## License
 

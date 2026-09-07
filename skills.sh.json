@@ -4,12 +4,27 @@
     {
       "title": "development",
       "description": "General development skills: open PRs/MRs on any forge, ship finished worktrees.",
-      "skills": ["pr", "shipit"]
+      "skills": [
+        "pr",
+        "shipit"
+      ]
     },
     {
       "title": "workflow",
       "description": "Joplin-backed task workflow: durable task notes plus a skill that drives work from them.",
-      "skills": ["task-notes", "task-work"]
+      "skills": [
+        "task-notes",
+        "task-work"
+      ]
+    },
+    {
+      "title": "sdlc",
+      "description": "Chained SDLC artifacts: intent, spec, and plan as reviewed markdown, with stage gates enforced by hooks.",
+      "skills": [
+        "intent",
+        "spec",
+        "plan"
+      ]
     }
   ]
 }

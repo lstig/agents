@@ -14,8 +14,9 @@ It is a glossary only: no implementation details, no decisions, no TODOs.
 | Path | What it is |
 |---|---|
 | `skills/experimental/<name>/` | One directory per skill: `SKILL.md` (agent-facing, loaded into model context) plus supporting files. Everything here is alpha. |
-| `.claude-plugin/marketplace.json` | The single source of plugin metadata. Plugins are defined inline (`strict: false`); there is deliberately **no** `plugin.json` — one manifest can't describe two plugins. |
+| `.claude-plugin/marketplace.json` | The single source of plugin metadata. Plugins are defined inline (`strict: false`); there is deliberately **no** `plugin.json` — one manifest can't describe several plugins. |
 | `.claude-plugin/mcp.json` | Canonical `joplin` MCP config, referenced explicitly by the `workflow` plugin. |
+| `.claude-plugin/hooks/` | The `sdlc` plugin's gate hook and its config, referenced explicitly by that plugin's `hooks` key. |
 | `skills.sh.json` | Groupings for the [skills.sh](https://skills.sh) listing. Must mirror `.claude-plugin/marketplace.json`'s plugins: same titles and same skill membership per group. |
 | `docs/` | Human-facing guides (setup, worked examples). Human docs go here, never into `SKILL.md`. |
 | `docs/adr/` | Architecture decision records. Doesn't exist yet; create it with the first ADR. |
@@ -41,9 +42,9 @@ If any leg is missing, a log line in the commit message is enough.
 
 ## Pitfalls
 
-- **Never add a root `.mcp.json`.**
-  It's a default plugin MCP location, so every plugin sourced at `./` auto-discovers it — this once leaked the joplin server into `development`.
-  The canonical config lives at `.claude-plugin/mcp.json`.
+- **Never add a root `.mcp.json` or a root `hooks/hooks.json`.**
+  Both are default plugin locations, so every plugin sourced at `./` auto-discovers them — this once leaked the joplin server into `development`.
+  The canonical configs live under `.claude-plugin/` and are referenced explicitly by the plugins that want them.
 - Marketplace `skills` paths replace the default `skills/` scan only because each entry's `source` is the marketplace root; don't assume that behavior elsewhere.
 - `skills.sh.json` and `.claude-plugin/marketplace.json` drift silently — nothing enforces the mirror. Renaming, adding, removing, or regrouping a plugin in one requires the same edit in the other in the same change.
 
