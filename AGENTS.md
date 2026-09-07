@@ -4,7 +4,7 @@ Instructions for agents (and humans) working on this repo.
 
 ## Start with CONTEXT.md
 
-[CONTEXT.md](./CONTEXT.md) is the glossary — the canonical vocabulary for this repo (Skill vs Plugin, Marketplace, Experimental, Guide, Artifact chain).
+[CONTEXT.md](./CONTEXT.md) is the glossary — the canonical vocabulary for this repo (Skill vs Plugin, Marketplace, Experimental vs Stable, Guide, Artifact chain).
 Use its terms exactly; don't substitute synonyms it lists under _Avoid_.
 When a design discussion changes or sharpens a term, update CONTEXT.md in the same change.
 It is a glossary only: no implementation details, no decisions, no TODOs.
@@ -13,7 +13,7 @@ It is a glossary only: no implementation details, no decisions, no TODOs.
 
 | Path | What it is |
 |---|---|
-| `skills/experimental/<name>/` | One directory per skill: `SKILL.md` (agent-facing, loaded into model context) plus supporting files. Everything here is alpha. |
+| `skills/<tier>/<name>/` | One directory per skill: `SKILL.md` (agent-facing, loaded into model context) plus supporting files. `<tier>` is `experimental` (alpha) or `stable` (settled). |
 | `.claude-plugin/marketplace.json` | The single source of plugin metadata. Plugins are defined inline (`strict: false`); there is deliberately **no** `plugin.json` — one manifest can't describe several plugins. |
 | `.claude-plugin/hooks/` | The `sdlc` plugin's gate script, plus `sdlc.json` as a copy-paste registration example for people vendoring the skills. The marketplace entry's `hooks` key inlines the registration — a marketplace entry can't reference a hooks file by path. |
 | `skills.sh.json` | Groupings for the [skills.sh](https://skills.sh) listing. Must mirror `.claude-plugin/marketplace.json`'s plugins: same titles and same skill membership per group. |
@@ -37,7 +37,7 @@ If any leg is missing, a log line in the commit message is enough.
 - Supporting files (formats, references) live beside `SKILL.md` and are linked relatively, so vendored copies stay self-contained.
 - Adding a skill means updating four places: the skill directory, the README table, (if it should install via Claude Code) a `skills` path in the right marketplace entry, and the matching group's `skills` array in `skills.sh.json`.
 - All new skills start in `skills/experimental/`.
-  Graduation to `skills/` is informal — earned through real use — and is cheap: nothing consumer-facing references paths.
+  Graduation to `skills/stable/` is informal — earned through real use — but not free: every marketplace entry pinning the old path needs the new one, plus a patch bump, and the README's skill links carry the tier so they move too.
 
 ## Pitfalls
 

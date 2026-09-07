@@ -16,8 +16,12 @@ _Avoid_: skill, package
 The repo's catalog of plugins (`.claude-plugin/marketplace.json`), named `lstig-agents` and addressed as `<plugin>@lstig-agents`.
 
 **Experimental**:
-The alpha maturity tier. An experimental skill lives under `skills/experimental/` and may change prompts, formats, or names without notice. Graduation to `skills/` is informal — earned through real use.
+The alpha maturity tier. An experimental skill lives under `skills/experimental/` and may change prompts, formats, or names without notice.
 _Avoid_: beta, unstable, draft
+
+**Stable**:
+The settled maturity tier. A stable skill lives under `skills/stable/`; its prompts and name change only with a version bump on the plugins that ship it. Graduation from experimental is informal — earned through real use.
+_Avoid_: released, GA, v1
 
 **Guide**:
 A human-facing document under `docs/` covering setup and example usage, possibly spanning several skills. Distinct from `SKILL.md`, which is agent-facing and loaded into model context.

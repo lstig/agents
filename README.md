@@ -10,16 +10,18 @@ The format is agent-agnostic: Pi, Claude Code, and OpenAI Codex all discover `SK
 
 ## Skills
 
+A skill's maturity is its directory.
+[`skills/stable/`](./skills/stable) is settled: prompts and names change only with a version bump.
 **Everything under [`skills/experimental/`](./skills/experimental) is alpha**: prompts, formats, and names may change without notice.
-A skill graduates to `skills/` once it has proven itself through real use.
+A skill graduates from one to the other once it has proven itself through real use.
 
 | Skill | What it does |
 |---|---|
-| [`pr`](./skills/experimental/pr) | Open a pull/merge request on the repo's forge (GitHub, GitLab, Gitea, Forgejo) using the forge's native CLI. |
-| [`shipit`](./skills/experimental/shipit) | Commit changes, merge the branch into its base, and remove the worktree. |
-| [`intent`](./skills/experimental/intent) | Capture an idea as a version-controlled intent — the first artifact in the intent -> spec -> plan chain. |
-| [`spec`](./skills/experimental/spec) | Turn an accepted intent into a spec: what the solution must do, checked against organizational policy. |
-| [`plan`](./skills/experimental/plan) | Turn an approved spec into a read-only implementation plan — the audit trail and review baseline. |
+| [`stable/pr`](./skills/stable/pr) | Open a pull/merge request on the repo's forge (GitHub, GitLab, Gitea, Forgejo) using the forge's native CLI. |
+| [`experimental/shipit`](./skills/experimental/shipit) | Commit changes, merge the branch into its base, and remove the worktree. |
+| [`experimental/intent`](./skills/experimental/intent) | Capture an idea as a version-controlled intent — the first artifact in the intent -> spec -> plan chain. |
+| [`experimental/spec`](./skills/experimental/spec) | Turn an accepted intent into a spec: what the solution must do, checked against organizational policy. |
+| [`experimental/plan`](./skills/experimental/plan) | Turn an approved spec into a read-only implementation plan — the audit trail and review baseline. |
 
 `intent`, `spec`, and `plan` form the SDLC artifact chain — one numbered chain of reviewed markdown per change, with the stage gates enforced by a hook rather than by asking the model.
 See [docs/sdlc.md](./docs/sdlc.md) for a worked example.
@@ -55,7 +57,7 @@ For example, to install one for Claude Code:
 
 ```bash
 git clone https://github.com/lstig/agents.git
-cp -R agents/skills/experimental/pr ~/.claude/skills/pr
+cp -R agents/skills/stable/pr ~/.claude/skills/pr
 ```
 
 Pi and Codex read the same `SKILL.md` layout; see your agent's docs for its skills location.
