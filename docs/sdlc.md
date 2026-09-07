@@ -61,8 +61,3 @@ Rejected ideas keep their files and their numbers.
 Installing via skills.sh or vendoring gets the skills but not the hook, so the gates become instructions rather than enforcement.
 To keep enforcement, copy [`.claude-plugin/hooks/`](../.claude-plugin/hooks) into your project and register `sdlc-gate.sh` as a `PreToolUse` hook on `Write|Edit`; [`sdlc.json`](../.claude-plugin/hooks/sdlc.json) is that registration, ready to paste.
 The hook needs `jq`; without it, it exits without blocking.
-
-## Relationship to the task workflow
-
-The chain decides *what* to build and *how*; [`task-work`](./task-workflow.md) drives the building.
-An approved plan is a good source for a task note's checklist.

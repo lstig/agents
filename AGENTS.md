@@ -4,7 +4,7 @@ Instructions for agents (and humans) working on this repo.
 
 ## Start with CONTEXT.md
 
-[CONTEXT.md](./CONTEXT.md) is the glossary — the canonical vocabulary for this repo (Skill vs Plugin, Marketplace, Experimental, Guide, Task note).
+[CONTEXT.md](./CONTEXT.md) is the glossary — the canonical vocabulary for this repo (Skill vs Plugin, Marketplace, Experimental, Guide, Artifact chain).
 Use its terms exactly; don't substitute synonyms it lists under _Avoid_.
 When a design discussion changes or sharpens a term, update CONTEXT.md in the same change.
 It is a glossary only: no implementation details, no decisions, no TODOs.
@@ -15,7 +15,6 @@ It is a glossary only: no implementation details, no decisions, no TODOs.
 |---|---|
 | `skills/experimental/<name>/` | One directory per skill: `SKILL.md` (agent-facing, loaded into model context) plus supporting files. Everything here is alpha. |
 | `.claude-plugin/marketplace.json` | The single source of plugin metadata. Plugins are defined inline (`strict: false`); there is deliberately **no** `plugin.json` — one manifest can't describe several plugins. |
-| `.claude-plugin/mcp.json` | Canonical `joplin` MCP config, referenced explicitly by the `workflow` plugin. |
 | `.claude-plugin/hooks/` | The `sdlc` plugin's gate script, plus `sdlc.json` as a copy-paste registration example for people vendoring the skills. The marketplace entry's `hooks` key inlines the registration — a marketplace entry can't reference a hooks file by path. |
 | `skills.sh.json` | Groupings for the [skills.sh](https://skills.sh) listing. Must mirror `.claude-plugin/marketplace.json`'s plugins: same titles and same skill membership per group. |
 | `docs/` | Human-facing guides (setup, worked examples). Human docs go here, never into `SKILL.md`. |
@@ -43,17 +42,17 @@ If any leg is missing, a log line in the commit message is enough.
 ## Pitfalls
 
 - **Never add a root `.mcp.json` or a root `hooks/hooks.json`.**
-  Both are default plugin locations, so every plugin sourced at `./` auto-discovers them — this once leaked the joplin server into `development`.
+  Both are default plugin locations, so every plugin sourced at `./` auto-discovers them — this once leaked an MCP server into `development`.
   The canonical configs live under `.claude-plugin/` and are referenced explicitly by the plugins that want them.
 - Marketplace `skills` paths replace the default `skills/` scan only because each entry's `source` is the marketplace root; don't assume that behavior elsewhere.
 - `skills.sh.json` and `.claude-plugin/marketplace.json` drift silently — nothing enforces the mirror. Renaming, adding, removing, or regrouping a plugin in one requires the same edit in the other in the same change.
 
 ## Contributing and committing
 
-- Conventional Commits (`type(scope): subject`); `!`/`BREAKING CHANGE:` when renaming or removing published plugins or changing note formats.
+- Conventional Commits (`type(scope): subject`); `!`/`BREAKING CHANGE:` when renaming or removing published plugins or changing artifact formats.
 - **Bump plugin versions with every change**, following semver on the affected marketplace entries: patch for fixes and doc tweaks to bundled skills, minor for new skills or backward-compatible behavior, major for renames, removals, or breaking format changes.
-  A change to a shared file (e.g. `.claude-plugin/mcp.json`) bumps every plugin that references it.
+  A change to a shared file (e.g. anything under `.claude-plugin/hooks/`) bumps every plugin that references it.
 - Before committing changes to `.claude-plugin/` or skill layout, run `claude plugin validate .`.
-- After marketplace changes, smoke test in a scratch project: add the marketplace from the local path, install both plugins, then check `claude mcp list` (the `joplin` server must appear under `plugin:workflow:` only) and that skills resolve.
+- After marketplace changes, smoke test in a scratch project: add the marketplace from the local path, install both plugins, then check `claude plugin list` (every plugin must report enabled, not "failed to load") and that skills resolve.
 - Markdown: one sentence per line; `.yaml` over `.yml`; no inline HTML.
 - Don't commit or push on behalf of the user unless asked.

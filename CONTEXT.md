@@ -9,7 +9,7 @@ A self-contained directory under `skills/` holding a `SKILL.md` (agent-facing in
 _Avoid_: plugin, command, prompt
 
 **Plugin**:
-A named, installable unit defined in the marketplace that bundles a selection of skills and any config they need (e.g. MCP servers). The repo ships two: `development` and `workflow`.
+A named, installable unit defined in the marketplace that bundles a selection of skills and any config they need (e.g. hooks). The repo ships two: `development` and `sdlc`.
 _Avoid_: skill, package
 
 **Marketplace**:
@@ -22,10 +22,6 @@ _Avoid_: beta, unstable, draft
 **Guide**:
 A human-facing document under `docs/` covering setup and example usage, possibly spanning several skills. Distinct from `SKILL.md`, which is agent-facing and loaded into model context.
 _Avoid_: readme, manual
-
-**Task note**:
-A Joplin to-do that is the durable, single source of truth for one task. Owned by the `task-notes` skill; consumed by `task-work`.
-_Avoid_: ticket, issue, todo
 
 **Artifact chain**:
 The three linked markdown files describing one change — intent, then spec, then plan — sharing a number and slug under `docs/sdlc/`. Owned by the `intent`, `spec`, and `plan` skills.
