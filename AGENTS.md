@@ -16,7 +16,7 @@ It is a glossary only: no implementation details, no decisions, no TODOs.
 | `skills/experimental/<name>/` | One directory per skill: `SKILL.md` (agent-facing, loaded into model context) plus supporting files. Everything here is alpha. |
 | `.claude-plugin/marketplace.json` | The single source of plugin metadata. Plugins are defined inline (`strict: false`); there is deliberately **no** `plugin.json` — one manifest can't describe several plugins. |
 | `.claude-plugin/mcp.json` | Canonical `joplin` MCP config, referenced explicitly by the `workflow` plugin. |
-| `.claude-plugin/hooks/` | The `sdlc` plugin's gate hook and its config, referenced explicitly by that plugin's `hooks` key. |
+| `.claude-plugin/hooks/` | The `sdlc` plugin's gate script, plus `sdlc.json` as a copy-paste registration example for people vendoring the skills. The marketplace entry's `hooks` key inlines the registration — a marketplace entry can't reference a hooks file by path. |
 | `skills.sh.json` | Groupings for the [skills.sh](https://skills.sh) listing. Must mirror `.claude-plugin/marketplace.json`'s plugins: same titles and same skill membership per group. |
 | `docs/` | Human-facing guides (setup, worked examples). Human docs go here, never into `SKILL.md`. |
 | `docs/adr/` | Architecture decision records. Doesn't exist yet; create it with the first ADR. |
