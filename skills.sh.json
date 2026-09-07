@@ -3,10 +3,9 @@
   "groupings": [
     {
       "title": "development",
-      "description": "General development skills: open PRs/MRs on any forge, ship finished worktrees.",
+      "description": "Open a pull or merge request on any forge, using its native CLI.",
       "skills": [
-        "pr",
-        "shipit"
+        "pr"
       ]
     },
     {

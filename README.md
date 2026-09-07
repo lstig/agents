@@ -18,7 +18,6 @@ A skill graduates from one to the other once it has proven itself through real u
 | Skill | What it does |
 |---|---|
 | [`stable/pr`](./skills/stable/pr) | Open a pull/merge request on the repo's forge (GitHub, GitLab, Gitea, Forgejo) using the forge's native CLI. |
-| [`experimental/shipit`](./skills/experimental/shipit) | Commit changes, merge the branch into its base, and remove the worktree. |
 | [`experimental/intent`](./skills/experimental/intent) | Capture an idea as a version-controlled intent — the first artifact in the intent -> spec -> plan chain. |
 | [`experimental/spec`](./skills/experimental/spec) | Turn an accepted intent into a spec: what the solution must do, checked against organizational policy. |
 | [`experimental/plan`](./skills/experimental/plan) | Turn an approved spec into a read-only implementation plan — the audit trail and review baseline. |
@@ -41,7 +40,7 @@ Works across Claude Code, Cursor, Codex, Copilot, Gemini CLI, and Cline.
 
 The repo is a Claude Code plugin marketplace ([`.claude-plugin/marketplace.json`](./.claude-plugin/marketplace.json)) named `lstig-agents`, offering two plugins:
 
-- **`development`** — the general development skills: `pr`, `shipit`.
+- **`development`** — `pr`, for opening a pull or merge request on any forge.
 - **`sdlc`** — the artifact chain: `intent`, `spec`, `plan`, plus the `PreToolUse` hook that enforces their gates.
 
 ```
