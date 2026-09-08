@@ -20,7 +20,9 @@ if [[ -n $cmd ]] && grep -qE "$writes" <<<"$cmd"; then
   candidates+=$'\n'$cmd
 fi
 
-pattern=$'[^ \t\'"<>;&|()]*docs/sdlc/(spec|plan)/[0-9]{4}[^ \t\'"<>;&|()]*'
+# Path characters only: a broader class swallows a shell prefix like f=<path>,
+# which then derives a garbage root and blocks a chain whose upstream is fine.
+pattern='[A-Za-z0-9_./-]*docs/sdlc/(spec|plan)/[0-9]{4}[A-Za-z0-9_./-]*'
 targets=$(grep -oE "$pattern" <<<"$candidates" | sort -u) || exit 0
 
 while IFS= read -r path; do
