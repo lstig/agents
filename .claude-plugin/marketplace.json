@@ -20,15 +20,20 @@
     {
       "name": "sdlc",
       "source": "./",
-      "description": "Chained SDLC artifacts: intent, spec, and plan as reviewed markdown, with stage gates enforced by hooks.",
-      "version": "0.1.2",
+      "description": "Chained SDLC artifacts: intent, spec, and plan as reviewed markdown, with stage gates enforced by hooks, and execution reviewed by an adversarial judge.",
+      "version": "0.2.0",
       "license": "MIT",
       "repository": "https://github.com/lstig/agents",
       "strict": false,
       "skills": [
         "./skills/experimental/intent",
         "./skills/experimental/spec",
-        "./skills/experimental/plan"
+        "./skills/experimental/plan",
+        "./skills/experimental/execute"
+      ],
+      "agents": [
+        "./skills/experimental/execute/agents/worker.md",
+        "./skills/experimental/execute/agents/judge.md"
       ],
       "hooks": {
         "PreToolUse": [

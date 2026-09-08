@@ -10,11 +10,12 @@
     },
     {
       "title": "sdlc",
-      "description": "Chained SDLC artifacts: intent, spec, and plan as reviewed markdown, with stage gates enforced by hooks.",
+      "description": "Chained SDLC artifacts: intent, spec, and plan as reviewed markdown, with stage gates enforced by hooks, and execution reviewed by an adversarial judge.",
       "skills": [
         "intent",
         "spec",
-        "plan"
+        "plan",
+        "execute"
       ]
     }
   ]
