@@ -1,5 +1,5 @@
 ---
-status: approved
+status: implemented
 owner: Luke Stigdon
 created: 2026-09-07
 spec: 0001
