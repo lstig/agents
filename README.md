@@ -23,7 +23,7 @@ A skill graduates from one to the other once it has proven itself through real u
 | [`experimental/plan`](./skills/experimental/plan) | Turn an approved spec into a read-only implementation plan — the audit trail and review baseline. |
 | [`experimental/execute`](./skills/experimental/execute) | Run an approved plan: a worker subagent implements, an adversarial judge reviews, and the loop ends only when the judge finds nothing. |
 
-`intent`, `spec`, and `plan` form the SDLC artifact chain — one numbered chain of reviewed markdown per change, with the stage gates enforced by a hook rather than by asking the model.
+`intent`, `spec`, and `plan` form the SDLC artifact chain — one directory of reviewed markdown per change, holding `intent.md`, `spec.md`, and `plan.md`, with the stage gates enforced by a hook rather than by asking the model.
 `execute` is what happens after the chain: it ships two subagents, `worker` and `judge`, and the judge reviews in a context that never sees the worker's account of its own work.
 See [docs/sdlc.md](./docs/sdlc.md) for a worked example.
 

@@ -1,8 +1,8 @@
 ---
 status: approved
+change-id: 0001
 owner: Luke Stigdon
 created: 2026-09-07
-intent: 0001
 ---
 
 # 0001 - Plan execution and adversarial review

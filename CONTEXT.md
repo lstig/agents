@@ -27,8 +27,16 @@ _Avoid_: released, GA, v1
 A human-facing document under `docs/` covering setup and example usage, possibly spanning several skills. Distinct from `SKILL.md`, which is agent-facing and loaded into model context.
 _Avoid_: readme, manual
 
+**Change**:
+The unit the SDLC skills work in: one number, one slug, one directory (`<container>/NNNN-slug/`). Every artifact in it carries `change-id: NNNN`, the number the directory name already states.
+_Avoid_: ticket, issue, story, feature
+
+**Container**:
+The directory holding every change directory — a directory named `changes`, wherever it sits in the tree, renamed by name with `SDLC_DIR`. Where a fresh repo puts it is stated once, in the artifact format.
+_Avoid_: root, sdlc dir, artifact dir
+
 **Artifact chain**:
-The three linked markdown files describing one change — intent, then spec, then plan — sharing a number and slug under `docs/sdlc/`. Owned by the `intent`, `spec`, and `plan` skills.
+The three linked markdown files inside one change directory — `intent.md`, then `spec.md`, then `plan.md`. Owned by the `intent`, `spec`, and `plan` skills.
 _Avoid_: pipeline, workflow, SDLC docs
 
 **Intent**:

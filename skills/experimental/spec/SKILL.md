@@ -6,8 +6,9 @@ argument-hint: "intent number, or a description of the accepted intent"
 
 A spec states what must be true for an intent to be satisfied, and nothing about how to build it.
 The `intent` skill owns the artifact format (its SDLC-FORMAT.md); load it now if it is not in context.
+Resolve the container as that file describes; `<container>` below means the directory you resolved, never a path you assumed.
 
-1. **Resolve and read the intent** — a bare number is `docs/sdlc/intent/NNNN-*.md`, otherwise search that directory.
+1. **Resolve and read the intent** — a bare number is `<container>/NNNN-*/intent.md`, otherwise search the container's chain directories.
    No match means offering `/intent`, not inventing one.
    Its status must be `accepted`; anything else stops here and gets reported, never self-accepted.
 
@@ -19,7 +20,8 @@ The `intent` skill owns the artifact format (its SDLC-FORMAT.md); load it now if
    Requirements must be checkable against the system that exists.
    Write no code.
 
-4. **Write** `docs/sdlc/spec/NNNN-slug.md` from the spec template, inheriting the intent's number and slug.
+4. **Write** `spec.md` beside that intent, in its chain directory, from the spec template.
+   `change-id` is the chain's number; the gate rejects a spec that disagrees with the directory holding it.
    Carry unresolved open questions forward explicitly; never drop one.
 
 5. **Report** the path, naming the policy conflicts and carried-over questions in your message — they are why a human reads this.

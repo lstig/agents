@@ -19,7 +19,8 @@ It is a glossary only: no implementation details, no decisions, no TODOs.
 | `.claude-plugin/hooks/` | The `sdlc` plugin's gate script, plus `sdlc.json` as a copy-paste registration example for people vendoring the skills. The marketplace entry's `hooks` key inlines the registration — a marketplace entry can't reference a hooks file by path. |
 | `skills.sh.json` | Groupings for the [skills.sh](https://skills.sh) listing. Must mirror `.claude-plugin/marketplace.json`'s plugins: same titles and same skill membership per group. |
 | `docs/` | Human-facing guides (setup, worked examples). Human docs go here, never into `SKILL.md`. |
-| `docs/adr/` | Architecture decision records. Doesn't exist yet; create it with the first ADR. |
+| `docs/changes/NNNN-slug/` | One change per directory: `intent.md`, `spec.md`, `plan.md`, sharing the directory's number and slug. `docs/changes/` is this repo's container; the default is stated once, in `skills/experimental/intent/SDLC-FORMAT.md`. |
+| `docs/adr/` | Architecture decision records, flat `NNNN-kebab-title.md`. |
 
 ## ADRs
 
