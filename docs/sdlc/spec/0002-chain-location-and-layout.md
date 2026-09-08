@@ -10,7 +10,7 @@ intent: 0002
 ## Summary
 One change gets one directory: `<container>/NNNN-slug/`, holding `intent.md`, `spec.md`, and `plan.md`.
 The container is a directory named `changes`, defaulting to `docs/changes/` but recognised wherever it sits, so moving it keeps the gates working instead of silently switching them off.
-Each artifact names the change it belongs to with an `id`, which the gate checks against the directory.
+Each artifact names the change it belongs to with a `change-id`, which the gate checks against the directory.
 The gate identifies an artifact by the shape around it — a chain directory inside a `changes` container — rather than by a hardcoded path, and the default location is stated once instead of nine times.
 
 ## Requirements
@@ -31,11 +31,11 @@ The gate identifies an artifact by the shape around it — a chain directory ins
 8. Numbering scans the container's chain directories, and the next number is one above the highest.
    Numbers are still never reused.
 9. The chain keeps the properties it has today: one number and slug per change, a shared slug across stages, and rejected or superseded artifacts left in place as the record.
-10. Every artifact's frontmatter carries `id: NNNN`, the number of the change it belongs to.
+10. Every artifact's frontmatter carries `change-id: NNNN`, the number of the change it belongs to.
     The stage-specific upstream keys `intent: NNNN` and `spec: NNNN` go away; a sibling file in the same directory is the link.
     `superseded-by` stays, since it points at a different change.
-11. The gate blocks a `spec.md` or `plan.md` whose `id` is missing or disagrees with its directory's number, naming both values.
-    An `id` nothing checks is decoration.
+11. The gate blocks a `spec.md` or `plan.md` whose `change-id` is missing or disagrees with its directory's number, naming both values.
+    A `change-id` nothing checks is decoration.
 12. Chain 0001 moves to the new layout, keeping its number, slug, and each artifact's status.
     Nothing is left in the old location, and its dropped frontmatter keys go with it.
 13. `CONTEXT.md` gains **change** as the unit — one number, one slug, one directory — with **artifact chain** kept for the files inside it.
@@ -62,8 +62,8 @@ The gate identifies an artifact by the shape around it — a chain directory ins
 - A write to an unrelated `rfcs/0012-thing/spec.md` is not gated.
 - A write to `docs/changes/0004-y/spec.md` with no `intent.md` beside it is blocked, and the message names the missing file.
 - `rg -l 'docs/sdlc' -- . ':!docs/changes'` returns nothing, and exactly one file states the default container path.
-- No artifact in the repo carries an `intent:` or `spec:` frontmatter key, and every artifact carries an `id:` matching its directory.
-- A `spec.md` moved into the wrong chain directory is blocked on its next write, with a message naming the `id` and the directory number.
+- No artifact in the repo carries an `intent:` or `spec:` frontmatter key, and every artifact carries a `change-id:` matching its directory.
+- A `spec.md` moved into the wrong chain directory is blocked on its next write, with a message naming the `change-id` and the directory number.
 - `.claude-plugin/hooks/sdlc-next.sh` prints `0003` against the migrated repo.
 - `claude plugin validate .` passes, and the `sdlc` entry's version has been bumped.
 
@@ -89,7 +89,7 @@ The gate identifies an artifact by the shape around it — a chain directory ins
   Listing every artifact at one stage becomes `docs/changes/*/intent.md` rather than a directory listing.
   Accepted when the layout was chosen; recorded here so the trade is visible to anyone reviewing the result rather than the discussion.
 
-- **`id` is duplication, kept because it is checkable.**
+- **`change-id` is duplication, kept because it is checkable.**
   The number now lives in the directory name and in the frontmatter, and the two can drift.
   That is the point: a claim that can disagree with its surroundings is a claim something can verify, which is why requirement 11 makes the gate verify it.
   Without that check the field would rot into decoration and be worse than nothing, since a reader would trust it.
