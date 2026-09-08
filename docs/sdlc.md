@@ -25,6 +25,10 @@ An agent writes artifacts and reports them; it never accepts, approves, or rejec
 The first two are enforced by a `PreToolUse` hook, not by asking the model nicely.
 Install the plugin and a write to `docs/sdlc/spec/0007-*.md` is blocked outright while intent `0007` still reads `proposed`.
 
+The hook watches `Write`, `Edit`, and `Bash`.
+Shell coverage is best-effort: it catches a gated path sitting next to a redirect or a mutating command, and misses one assembled from a variable.
+The third gate is not enforced at all — implementation writes go to ordinary source paths, which no path-matching hook can tell apart from any other editing session.
+
 ## Worked example
 
 ```
@@ -59,5 +63,5 @@ Rejected ideas keep their files and their numbers.
 ```
 
 Installing via skills.sh or vendoring gets the skills but not the hook, so the gates become instructions rather than enforcement.
-To keep enforcement, copy [`.claude-plugin/hooks/`](../.claude-plugin/hooks) into your project and register `sdlc-gate.sh` as a `PreToolUse` hook on `Write|Edit`; [`sdlc.json`](../.claude-plugin/hooks/sdlc.json) is that registration, ready to paste.
+To keep enforcement, copy [`.claude-plugin/hooks/`](../.claude-plugin/hooks) into your project and register `sdlc-gate.sh` as a `PreToolUse` hook on `Write|Edit|Bash`; [`sdlc.json`](../.claude-plugin/hooks/sdlc.json) is that registration, ready to paste.
 The hook needs `jq`; without it, it exits without blocking.
