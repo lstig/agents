@@ -1,5 +1,5 @@
 ---
-status: draft
+status: approved
 owner: Luke Stigdon
 created: 2026-09-07
 intent: 0002
@@ -40,7 +40,7 @@ The gate identifies an artifact by the shape around it — a chain directory ins
     Nothing is left in the old location, and its dropped frontmatter keys go with it.
 13. `CONTEXT.md` gains **change** as the unit — one number, one slug, one directory — with **artifact chain** kept for the files inside it.
 14. The change is recorded as the repo's first ADR under `docs/adr/`.
-15. The `sdlc` plugin's version bump reflects a breaking format change, and the guide documents the new layout as the only layout.
+15. The `sdlc` plugin's version becomes `0.3.0`, and the guide documents the new layout as the only layout.
 
 ## Out of scope
 - Migrating anyone else's artifacts, or a migration script.
@@ -82,8 +82,8 @@ The gate identifies an artifact by the shape around it — a chain directory ins
 - **Pre-1.0 versioning conflicts with the repo's own rule.**
   `AGENTS.md` says major for breaking format changes, which would mean `sdlc` 0.2.0 -> 1.0.0.
   That number claims a stability the skills do not have; they are all `experimental` by their own directory.
-  Resolution: bump the minor to 0.3.0, the breaking increment while a package is pre-1.0, and let 1.0.0 mean what `skills/stable/` means.
-  Requirement 15 asks only that the bump reflect a breaking change; the plan may argue the other way.
+  Ruled: 0.3.0, the breaking increment while a package is pre-1.0, leaving 1.0.0 to mean what `skills/stable/` means.
+  Requirement 15 pins that number; `AGENTS.md` keeps its rule for post-1.0 plugins.
 
 - **The third carried question is answered by the layout, not waived.**
   Listing every artifact at one stage becomes `docs/changes/*/intent.md` rather than a directory listing.
