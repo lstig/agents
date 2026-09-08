@@ -1,5 +1,5 @@
 ---
-status: proposed
+status: accepted
 owner: Luke Stigdon
 created: 2026-09-07
 ---
