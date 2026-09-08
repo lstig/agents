@@ -30,16 +30,25 @@ The gate identifies an artifact by the shape around it — a chain directory ins
 8. Numbering scans the container's chain directories, and the next number is one above the highest.
    Numbers are still never reused.
 9. The chain keeps the properties it has today: one number and slug per change, a shared slug across stages, and rejected or superseded artifacts left in place as the record.
-10. Chain 0001 moves to the new layout, keeping its number, slug, and each artifact's status.
-    Nothing is left in the old location.
-11. `CONTEXT.md` gains **change** as the unit — one number, one slug, one directory — with **artifact chain** kept for the files inside it.
-12. The change is recorded as the repo's first ADR under `docs/adr/`.
-13. The `sdlc` plugin's version bump reflects a breaking format change, and the guide documents the new layout as the only layout.
+10. An artifact's frontmatter no longer carries its upstream's number.
+    `intent: NNNN` and `spec: NNNN` go away; a sibling file in the same directory is the link.
+11. An intent may carry `depends-on`, a list of change numbers this change assumes are already done.
+    It is omitted when empty, and it is the only cross-chain reference besides `superseded-by`.
+12. `depends-on` is declared on the intent, because the dependency belongs to the change rather than to one of its documents.
+    A dependency discovered later is added to the intent in place, without superseding it.
+13. `depends-on` is not gated.
+    Skills report a change's dependencies and their statuses; nothing blocks on them.
+14. Chain 0001 moves to the new layout, keeping its number, slug, and each artifact's status.
+    Nothing is left in the old location, and its dropped frontmatter keys go with it.
+15. `CONTEXT.md` gains **change** as the unit — one number, one slug, one directory — with **artifact chain** kept for the files inside it.
+16. The change is recorded as the repo's first ADR under `docs/adr/`.
+17. The `sdlc` plugin's version bump reflects a breaking format change, and the guide documents the new layout as the only layout.
 
 ## Out of scope
 - Migrating anyone else's artifacts, or a migration script.
   Chain 0001 is the whole population.
-- Changing artifact content: the templates, the status values, and the gate thresholds are untouched.
+- Changing what artifacts say: the section structure, the status values, and the gate thresholds are untouched.
+  Only the frontmatter keys move (requirements 10 and 11).
 - Enforcing the plan-approved gate, still out of reach for a path-matching hook (spec 0001).
 - Per-repo configuration beyond `SDLC_DIR` — no config file, no manifest key.
 - Reorganising `docs/adr/`, which keeps its flat `NNNN-title.md` shape.
@@ -53,6 +62,8 @@ The gate identifies an artifact by the shape around it — a chain directory ins
 - A write to an unrelated `rfcs/0012-thing/spec.md` is not gated.
 - A write to `docs/changes/0004-y/spec.md` with no `intent.md` beside it is blocked, and the message names the missing file.
 - `rg -l 'docs/sdlc' -- . ':!docs/changes'` returns nothing, and exactly one file states the default container path.
+- No artifact in the repo carries an `intent:` or `spec:` frontmatter key, and the templates no longer show one.
+- An intent declaring `depends-on: [0001]` is reported with 0001's status when its chain is read, and writes to its spec and plan are gated by its own intent only.
 - `.claude-plugin/hooks/sdlc-next.sh` prints `0003` against the migrated repo.
 - `claude plugin validate .` passes, and the `sdlc` entry's version has been bumped.
 
@@ -72,11 +83,21 @@ The gate identifies an artifact by the shape around it — a chain directory ins
   `AGENTS.md` says major for breaking format changes, which would mean `sdlc` 0.2.0 -> 1.0.0.
   That number claims a stability the skills do not have; they are all `experimental` by their own directory.
   Resolution: bump the minor to 0.3.0, the breaking increment while a package is pre-1.0, and let 1.0.0 mean what `skills/stable/` means.
-  Requirement 13 asks only that the bump reflect a breaking change; the plan may argue the other way.
+  Requirement 17 asks only that the bump reflect a breaking change; the plan may argue the other way.
 
 - **The third carried question is answered by the layout, not waived.**
   Listing every artifact at one stage becomes `docs/changes/*/intent.md` rather than a directory listing.
   Accepted when the layout was chosen; recorded here so the trade is visible to anyone reviewing the result rather than the discussion.
 
-- **Requirement 12 is the repo's own ADR test, not ceremony.**
+- **`depends-on` is advisory, and that is a choice.**
+  Requirement 13 keeps it out of the gate.
+  Enforcing it would mean blocking a spec until another change's plan reads `implemented`, which forbids the ordinary case of specifying two related changes in parallel and would put the gate in the business of scheduling rather than sequencing.
+  The cost is that a stale or wrong `depends-on` misleads a reader and nothing catches it.
+
+- **Dropping the upstream number costs a cheap integrity check.**
+  Today a spec saying `intent: 0007` inside chain 0007 is redundant, but it does catch a file copied into the wrong directory.
+  After requirement 10 the directory is the only claim of identity, so a misfiled artifact reads as belonging where it sits.
+  Accepted: the redundancy only detects an error the flat layout made easy to commit in the first place.
+
+- **Requirement 16 is the repo's own ADR test, not ceremony.**
   Hard to reverse once artifacts exist elsewhere, surprising without context, and chosen against real alternatives — all three legs hold, and `docs/adr/` does not exist yet, so this change creates it.
