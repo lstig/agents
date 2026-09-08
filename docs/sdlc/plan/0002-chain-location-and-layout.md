@@ -1,5 +1,5 @@
 ---
-status: draft
+status: approved
 owner: Luke Stigdon
 created: 2026-09-07
 spec: 0002
