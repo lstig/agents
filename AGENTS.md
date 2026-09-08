@@ -14,6 +14,7 @@ It is a glossary only: no implementation details, no decisions, no TODOs.
 | Path | What it is |
 |---|---|
 | `skills/<tier>/<name>/` | One directory per skill: `SKILL.md` (agent-facing, loaded into model context) plus supporting files. `<tier>` is `experimental` (alpha) or `stable` (settled). |
+| `skills/<tier>/<name>/agents/*.md` | Subagent definitions shipped beside the skill that dispatches them. Registered by listing each **file** in a marketplace entry's `agents` key — the directory form is rejected by `claude plugin validate`. |
 | `.claude-plugin/marketplace.json` | The single source of plugin metadata. Plugins are defined inline (`strict: false`); there is deliberately **no** `plugin.json` — one manifest can't describe several plugins. |
 | `.claude-plugin/hooks/` | The `sdlc` plugin's gate script, plus `sdlc.json` as a copy-paste registration example for people vendoring the skills. The marketplace entry's `hooks` key inlines the registration — a marketplace entry can't reference a hooks file by path. |
 | `skills.sh.json` | Groupings for the [skills.sh](https://skills.sh) listing. Must mirror `.claude-plugin/marketplace.json`'s plugins: same titles and same skill membership per group. |
@@ -36,11 +37,16 @@ If any leg is missing, a log line in the commit message is enough.
   Frontmatter needs `name` and `description`; add `disable-model-invocation: true` for skills that must only run when a user invokes them.
 - Supporting files (formats, references) live beside `SKILL.md` and are linked relatively, so vendored copies stay self-contained.
 - Adding a skill means updating four places: the skill directory, the README table, (if it should install via Claude Code) a `skills` path in the right marketplace entry, and the matching group's `skills` array in `skills.sh.json`.
+  A skill that ships subagents adds a fifth: each agent file listed in that entry's `agents` key.
+  `skills.sh.json` has no equivalent, so skills.sh and vendored installs get the skill without its subagents — say so in the docs rather than letting it fail at dispatch.
 - All new skills start in `skills/experimental/`.
   Graduation to `skills/stable/` is informal — earned through real use — but not free: every marketplace entry pinning the old path needs the new one, plus a patch bump, and the README's skill links carry the tier so they move too.
 
 ## Pitfalls
 
+- **Never add a root `agents/` directory.**
+  It is a default plugin location, so every plugin sourced at `./` would pick up every agent in it — `development` would silently acquire `worker` and `judge`.
+  Subagent files live beside their skill and are named file-by-file in the owning marketplace entry.
 - **Never add a root `.mcp.json` or a root `hooks/hooks.json`.**
   Both are default plugin locations, so every plugin sourced at `./` auto-discovers them — this once leaked an MCP server into `development`.
   The canonical configs live under `.claude-plugin/` and are referenced explicitly by the plugins that want them.

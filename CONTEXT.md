@@ -43,6 +43,22 @@ _Avoid_: design doc, requirements doc, PRD
 The third artifact: how the change gets built, written read-only against the real codebase. Written only once its spec is `approved`, and the baseline a reviewer later checks the diff against.
 _Avoid_: strategy, approach doc
 
+**Subagent**:
+A separately-dispatched agent with its own context, defined as a markdown file with frontmatter and shipped by a plugin's `agents` key. The repo ships two: `worker` and `judge`.
+_Avoid_: agent, task, helper
+
+**Worker**:
+The subagent that implements an approved plan and reports against its steps. It never judges its own output.
+_Avoid_: implementer, builder, executor
+
+**Judge**:
+The subagent that reviews a worker's changes adversarially, in a context that never sees the worker's account of the work. Read-only by construction. An empty review is evidence for a human, never an approval.
+_Avoid_: reviewer, critic, validator
+
+**Lens**:
+One of the fixed angles a judge reviews through — plan conformance, correctness, scope, conventions, best practices, security and data handling. Every lens is reported every round, including the ones that find nothing.
+_Avoid_: category, dimension, check
+
 **Gate**:
 A `status` value in an artifact's frontmatter that only a human moves forward. An agent writes artifacts and reports them; it never accepts, approves, or rejects its own work.
 _Avoid_: state, phase, approval step

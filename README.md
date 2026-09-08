@@ -3,7 +3,7 @@
 [![skills.sh](https://skills.sh/b/lstig/agents)](https://skills.sh/lstig/agents)
 
 Portable customizations for AI coding agents.
-Today that's a set of [Agent Skills](https://agentskills.io/specification) under [`skills/`](./skills); subagents, prompts, and themes may follow.
+Today that's a set of [Agent Skills](https://agentskills.io/specification) under [`skills/`](./skills), plus the subagents one of them dispatches; prompts and themes may follow.
 
 Each skill is a self-contained directory holding a `SKILL.md` (frontmatter + instructions) and any supporting files.
 The format is agent-agnostic: Pi, Claude Code, and OpenAI Codex all discover `SKILL.md` directories.
@@ -21,8 +21,10 @@ A skill graduates from one to the other once it has proven itself through real u
 | [`experimental/intent`](./skills/experimental/intent) | Capture an idea as a version-controlled intent — the first artifact in the intent -> spec -> plan chain. |
 | [`experimental/spec`](./skills/experimental/spec) | Turn an accepted intent into a spec: what the solution must do, checked against organizational policy. |
 | [`experimental/plan`](./skills/experimental/plan) | Turn an approved spec into a read-only implementation plan — the audit trail and review baseline. |
+| [`experimental/execute`](./skills/experimental/execute) | Run an approved plan: a worker subagent implements, an adversarial judge reviews, and the loop ends only when the judge finds nothing. |
 
 `intent`, `spec`, and `plan` form the SDLC artifact chain — one numbered chain of reviewed markdown per change, with the stage gates enforced by a hook rather than by asking the model.
+`execute` is what happens after the chain: it ships two subagents, `worker` and `judge`, and the judge reviews in a context that never sees the worker's account of its own work.
 See [docs/sdlc.md](./docs/sdlc.md) for a worked example.
 
 ## Installing
@@ -41,7 +43,7 @@ Works across Claude Code, Cursor, Codex, Copilot, Gemini CLI, and Cline.
 The repo is a Claude Code plugin marketplace ([`.claude-plugin/marketplace.json`](./.claude-plugin/marketplace.json)) named `lstig-agents`, offering two plugins:
 
 - **`development`** — `pr`, for opening a pull or merge request on any forge.
-- **`sdlc`** — the artifact chain: `intent`, `spec`, `plan`, plus the `PreToolUse` hook that enforces their gates.
+- **`sdlc`** — the artifact chain: `intent`, `spec`, `plan`, `execute` and its two subagents, plus the `PreToolUse` hook that enforces the gates.
 
 ```
 /plugin marketplace add lstig/agents
@@ -52,6 +54,7 @@ The repo is a Claude Code plugin marketplace ([`.claude-plugin/marketplace.json`
 ### Vendored
 
 Point your agent's skills directory at these, or copy individual skills into your own dotfiles.
+This route carries skills only: `execute` arrives without `worker` and `judge`, and stops rather than doing the work itself.
 For example, to install one for Claude Code:
 
 ```bash

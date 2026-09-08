@@ -1,6 +1,6 @@
 # The SDLC artifact chain
 
-Three skills — `intent`, `spec`, `plan` — write one chain of reviewed markdown per change:
+Three skills — `intent`, `spec`, `plan` — write one chain of reviewed markdown per change, and a fourth, `execute`, builds what they approved:
 
 ```
 docs/sdlc/intent/0007-workload-token-issuer.md   what problem is worth solving
@@ -50,7 +50,19 @@ Approve it the same way.
 ```
 
 Reads the codebase without touching it and writes the plan: approach, rejected alternatives, steps, affected files, risks, verification commands.
-Approve it, then implement in a fresh session that starts from the approved plan.
+Approve it, then build it:
+
+```
+/execute 0007
+```
+
+`execute` sizes a `worker` subagent to the plan, puts it to work in a git worktree, and hands the result to a `judge` subagent that never sees the worker's account of what it did.
+The judge reviews through six fixed lenses — plan conformance, correctness, scope, conventions, best practices, security — and reports every one of them each round, including the lenses that found nothing.
+Findings go back to the worker; the loop ends only when a review comes back empty.
+The judge is read-only by construction and runs on the worker's model or a stronger one, never a weaker one.
+
+What comes out is a commit on a branch.
+Pushing it, opening a pull request, merging, and moving the plan to `implemented` stay with you — an empty review is evidence for that decision, not the decision.
 
 Rejected ideas keep their files and their numbers.
 `status: rejected` is a record; deleting the file is not.
@@ -62,6 +74,6 @@ Rejected ideas keep their files and their numbers.
 /plugin install sdlc@lstig-agents
 ```
 
-Installing via skills.sh or vendoring gets the skills but not the hook, so the gates become instructions rather than enforcement.
+Installing via skills.sh or vendoring gets the skills but neither the hook nor the subagents, so the gates become instructions rather than enforcement and `execute` stops instead of dispatching.
 To keep enforcement, copy [`.claude-plugin/hooks/`](../.claude-plugin/hooks) into your project and register `sdlc-gate.sh` as a `PreToolUse` hook on `Write|Edit|Bash`; [`sdlc.json`](../.claude-plugin/hooks/sdlc.json) is that registration, ready to paste.
 The hook needs `jq`; without it, it exits without blocking.
