@@ -3,13 +3,14 @@
 Three skills — `intent`, `spec`, `plan` — write one chain of reviewed markdown per change, and a fourth, `execute`, builds what they approved:
 
 ```
-docs/sdlc/intent/0007-workload-token-issuer.md   what problem is worth solving
-docs/sdlc/spec/0007-workload-token-issuer.md     what the solution must do
-docs/sdlc/plan/0007-workload-token-issuer.md     how it gets built
+docs/changes/0007-workload-token-issuer/intent.md   what problem is worth solving
+docs/changes/0007-workload-token-issuer/spec.md     what the solution must do
+docs/changes/0007-workload-token-issuer/plan.md     how it gets built
 ```
 
-One number and slug span the chain, so `rg 0007 docs/sdlc/` returns all of it.
-The format lives in [SDLC-FORMAT.md](../skills/experimental/intent/SDLC-FORMAT.md).
+One change is one directory: the number and slug name it, the stage is the filename, and every artifact repeats the number as `change-id`, so `rg 0007 docs/changes/` returns all of it.
+The container above is a directory *named* `changes` — put it somewhere else in the tree and the gates follow it, or set `SDLC_DIR` to call it something else entirely.
+The format states where a fresh repo puts it, along with the templates and the status values: [SDLC-FORMAT.md](../skills/experimental/intent/SDLC-FORMAT.md).
 
 ## The gates are the point
 
@@ -23,7 +24,11 @@ An agent writes artifacts and reports them; it never accepts, approves, or rejec
 | start building | its plan is `approved` |
 
 The first two are enforced by a `PreToolUse` hook, not by asking the model nicely.
-Install the plugin and a write to `docs/sdlc/spec/0007-*.md` is blocked outright while intent `0007` still reads `proposed`.
+Install the plugin and a write to `docs/changes/0007-*/spec.md` is blocked outright while the `intent.md` beside it still reads `proposed`.
+
+The hook recognises an artifact by shape — `<container>/NNNN-slug/spec.md` or `plan.md` — so nothing outside a `changes` container is gated, and a file in a chain directory that is not one of the three stages is not gated either.
+It also blocks a spec or plan whose `change-id` disagrees with the directory it sits in, which is how a chain that has been half-moved gets caught.
+That check reads the text the write proposes, not the file on disk, so the edit that repairs a wrong or missing `change-id` is never the one blocked.
 
 The hook watches `Write`, `Edit`, and `Bash`.
 Shell coverage is best-effort: it catches a gated path sitting next to a redirect or a mutating command, and misses one assembled from a variable.
@@ -35,7 +40,7 @@ The third gate is not enforced at all — implementation writes go to ordinary s
 /intent add short-lived tokens for service-to-service auth
 ```
 
-Writes `docs/sdlc/intent/0007-workload-token-issuer.md` with `status: proposed` and stops.
+Writes `docs/changes/0007-workload-token-issuer/intent.md` with `status: proposed` and stops.
 You read it, and if it is worth doing, change the line to `status: accepted` and commit.
 
 ```

@@ -2,18 +2,37 @@
 
 Three chained artifacts: **intent** (problem worth solving) -> **spec** (what the solution must do) -> **plan** (how it gets built).
 
-## Location and numbering
+## Location and layout
+
+One change is one directory, holding one file per stage:
 
 ```
-docs/sdlc/intent/NNNN-kebab-slug.md
-docs/sdlc/spec/NNNN-kebab-slug.md
-docs/sdlc/plan/NNNN-kebab-slug.md
+<container>/NNNN-kebab-slug/intent.md
+<container>/NNNN-kebab-slug/spec.md
+<container>/NNNN-kebab-slug/plan.md
 ```
 
-A repo may relocate these in its `CLAUDE.md` or `AGENTS.md`; check there first.
+Resolve the container once per session, in this order:
 
-The intent allocates `NNNN` and the slug; its spec and plan inherit both, so `rg 0007 docs/sdlc/` returns the whole chain.
+1. **Name it.** `$SDLC_DIR` if that variable is set, otherwise `changes`.
+   `SDLC_DIR` holds a name, never a path; the hooks read the same variable, so skipping this step puts artifacts where the gate does not look.
+2. **Find it.** Any existing directory with that name, wherever it sits — `fd -td "^$name\$"`, or `find . -type d -name "$name" -not -path '*/.git/*'`.
+   A nested one counts; that is what lets a repo place the container anywhere.
+   Two matches is a question for the user, not a guess.
+3. **Otherwise create `docs/<name>/`.**
+
+Step 3 is the only statement of the default location; nothing else restates it.
+
+## Numbering and identity
+
+The intent allocates `NNNN` and the slug, which name the directory; every stage in it inherits both.
+Each artifact's frontmatter carries `change-id: NNNN`, matching the directory it sits in, so an artifact read on its own still names its change.
+The gate blocks a `spec.md` or `plan.md` whose `change-id` disagrees with its directory.
+
 Numbers are never reused — rejected and superseded artifacts stay in the repo as the record of what was considered.
+Because the number is in the directory name and in every artifact, `rg 0007 <container>/` returns the whole chain.
+
+A file in a chain directory that is not one of the three stages is not an artifact, and is neither gated nor numbered.
 
 ## Status
 
@@ -25,13 +44,16 @@ Status is the gate, and only a human moves an artifact through one.
 | spec | `draft`, `approved`, `superseded` | `approved` before its plan |
 | plan | `draft`, `approved`, `implemented`, `superseded` | `approved` before implementation |
 
-A superseded artifact adds `superseded-by: NNNN`.
+An artifact's upstream is its sibling in the same directory: `spec.md` reads `intent.md`, `plan.md` reads `spec.md`.
+
+A superseded artifact adds `superseded-by: NNNN`, the number of the change that replaced it.
 
 ## Templates
 
 ```md
 ---
 status: proposed
+change-id: NNNN
 owner: <name>
 created: YYYY-MM-DD
 ---
@@ -54,9 +76,9 @@ Optional. What must be answered before this can be specified.
 ```md
 ---
 status: draft
+change-id: NNNN
 owner: <name>
 created: YYYY-MM-DD
-intent: NNNN
 ---
 
 # NNNN - <title>
@@ -80,9 +102,9 @@ Optional. Policy conflicts found while drafting, and each one's resolution or wa
 ```md
 ---
 status: draft
+change-id: NNNN
 owner: <name>
 created: YYYY-MM-DD
-spec: NNNN
 ---
 
 # NNNN - <title>

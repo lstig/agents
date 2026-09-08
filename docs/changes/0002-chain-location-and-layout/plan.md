@@ -1,8 +1,8 @@
 ---
 status: approved
+change-id: 0002
 owner: Luke Stigdon
 created: 2026-09-07
-spec: 0002
 ---
 
 # 0002 - Chain location and layout
